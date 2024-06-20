@@ -95,18 +95,18 @@ public class DocumentController {
         }
     }
 
-    @GetMapping("/viewreviewlog/{applicationTransactionId}")
-    public ResponseEntity<Review> getReviewByApplicationId(@PathVariable long applicationTransactionId) {
-        Optional<Review> reviewOptional = documentService.viewReviewLog(applicationTransactionId);
+    @GetMapping("/viewreviewlog/{application_transaction_id}")
+    public ResponseEntity<Review> getReviewByApplicationId(@PathVariable long application_transaction_id) {
+        Optional<Review> reviewOptional = documentService.viewReviewLog(application_transaction_id);
 
         return reviewOptional
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/vieweditlog/{applicationTransactionId}")
-    public ResponseEntity<ArchiveDocument> getArchiveDocumentByApplicationTransactionId(@PathVariable long applicationTransactionId) {
-        Optional<ArchiveDocument> archiveDocumentOptional = documentService.viewEditLog(applicationTransactionId);
+    @GetMapping("/vieweditlog/{application_transaction_id}")
+    public ResponseEntity<ArchiveDocument> getArchiveDocumentByApplicationTransactionId(@PathVariable long application_transaction_id) {
+        Optional<ArchiveDocument> archiveDocumentOptional = documentService.viewEditLog(application_transaction_id);
 
         if (archiveDocumentOptional.isPresent()) {
             return ResponseEntity.ok(archiveDocumentOptional.get());
