@@ -1,7 +1,10 @@
 package com.project1.project.config;
 
+
+
 import com.project1.project.Jwt.JwtFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -16,16 +19,25 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    @Autowired
     private final JwtFilter jwtFilter;
 
+    @Autowired
     private final AuthenticationProvider authenticationProvider;
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
         http
                 .csrf(csrf ->csrf.disable())
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/init/**", "/register/**")
+                        .requestMatchers("/init",
+                                "/v3/api-docs/**",
+                                "/swagger-resources/**",
+                                "/swagger-ui/**",
+                                "/webjars/**",
+                                "/swagger-ui.html",
+                                "/swagger-ui/index.html")
                         .permitAll()
                         .anyRequest().authenticated()
                 ).sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -34,4 +46,8 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+
+
+
 }
